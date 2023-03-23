@@ -1,0 +1,89 @@
+:root {
+  --color-cream:#F5EFED;
+  --color-emeraude:#3B7054;
+  --color-matcha:#BBC296;
+  --color-coffe:#31211B;
+  --color-base: #000000
+}
+
+.body {
+  &--large {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.04em;
+  }
+}
+
+h1 {
+  font-family: 'Erotique Alternate Trial';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 36px;
+  letter-spacing: 0.04em;
+}
+
+h2 {
+  font-family: 'Erotique Alternate Trial';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 32px;
+  letter-spacing: 0.04em;
+}
+
+h3 {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 31px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.label {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--xsmall {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  &--small {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  &--medium {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+caption {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
