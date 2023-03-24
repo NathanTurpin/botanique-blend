@@ -1,11 +1,10 @@
 <script setup>
-import NavBar from './components/NavBar.vue'
 import FirstSection from './components/FirstSection.vue'
+import Header from './components/Header.vue'
 </script>
 
 <template>
-  <NavBar />
-  <header></header>
+  <Header />
   <main>
     <FirstSection />
     <!-- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur asperiores delectus illum
