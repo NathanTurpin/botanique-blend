@@ -7,6 +7,7 @@ const scrolledNav = ref(null)
 const mobile = ref(null)
 const mobileNav = ref(null)
 const windowWidth = ref(window.innerWidth)
+const show = ref(false)
 
 const toggleMobileNav = () => {
   mobileNav.value = !mobileNav.value
@@ -25,13 +26,25 @@ const handleScroll = () => {
   if (window.pageYOffset > 0) {
     scrolledNav.value = true
 
-    return
+    const timer = setInterval(() => {
+      show.value = true
+      clearInterval(timer)
+    }, 300)
+  } else {
+    scrolledNav.value = false
+    const timer = setInterval(() => {
+      show.value = false
+      clearInterval(timer)
+    }, 300)
   }
-  scrolledNav.value = false
 }
 
 const handleLogoHover = () => {
   scrolledNav.value = !scrolledNav.value
+  const timer = setInterval(() => {
+    show.value = false
+    clearInterval(timer)
+  }, 300)
 }
 
 window.addEventListener('resize', () => {
@@ -49,46 +62,65 @@ onUnmounted(() => {
 
 <template>
   <header class="container">
-    <nav class="nav" v-if="!scrolledNav">
-      <div class="nav__branding">
-        <img :src="logoSrc" alt="altLogo" class="nav__logo" />
-      </div>
-
-      <ul class="nav__navigation" v-show="!mobile">
-        <li class="nav__link label label--small">La pépinière</li>
-        <li class="nav__link label label--small">La carte</li>
-        <li class="nav__link label label--small">Notre histoire</li>
-        <li class="nav__link label label--small">L’équipe</li>
-        <li class="nav__link label label--small">inspiration</li>
-      </ul>
-
-      <div class="nav__icon">
-        <img v-show="mobile" @click="toggleMobileNav" src="@/assets/img/nav/toggle.svg" alt="" />
-      </div>
-
-      <transition name="mobile-nav">
-        <ul class="dropdown-nav" v-show="mobileNav">
-          <li class="dropdown-nav__link label label--small">La pépinière</li>
-          <li class="dropdown-nav__link label label--small">La carte</li>
-          <li class="dropdown-nav__link label label--small">Notre histoire</li>
-          <li class="dropdown-nav__link label label--small">L’équipe</li>
-          <li class="dropdown-nav__link label label--small">inspiration</li>
-        </ul>
-      </transition>
-
-      <transition name="mobile-nav-icon">
-        <div class="dropdown-nav__icon-close" v-show="mobileNav">
-          <img @click="toggleMobileNav" src="@/assets/img/nav/toggle.svg" alt="" />
+    <transition name="fade">
+      <nav class="nav" v-if="!scrolledNav && !show">
+        <div class="nav__branding">
+          <img :src="logoSrc" alt="altLogo" class="nav__logo" />
         </div>
-      </transition>
-    </nav>
-    <div class="logo" v-else @mouseover="handleLogoHover">
-      <img :src="logoSmall" alt="" />
-    </div>
+
+        <ul class="nav__navigation" v-show="!mobile">
+          <li class="nav__link label label--small">La pépinière</li>
+          <li class="nav__link label label--small">La carte</li>
+          <li class="nav__link label label--small">Notre histoire</li>
+          <li class="nav__link label label--small">L’équipe</li>
+          <li class="nav__link label label--small">inspiration</li>
+        </ul>
+
+        <div class="nav__icon">
+          <img v-show="mobile" @click="toggleMobileNav" src="@/assets/img/nav/toggle.svg" alt="" />
+        </div>
+
+        <transition name="mobile-nav">
+          <div class="dropdown-nav" v-show="mobileNav">
+            <div class="mobile-nav-icon" v-show="mobileNav">
+              <img class="mobile-nav-icon__logo" :src="logoSmall" alt="altLogo" />
+              <img
+                class="mobile-nav-icon__toggle-close"
+                @click="toggleMobileNav"
+                src="@/assets/img/nav/toggle-close.svg"
+                alt=""
+              />
+            </div>
+
+            <h2 class="dropdown-nav__link">La pépinière</h2>
+            <h2 class="dropdown-nav__link">La carte</h2>
+            <h2 class="dropdown-nav__link">Notre histoire</h2>
+            <h2 class="dropdown-nav__link">L’équipe</h2>
+            <h2 class="dropdown-nav__link">Inspiration</h2>
+          </div>
+        </transition>
+      </nav>
+      <div class="logo" v-else-if="scrolledNav && show" @mouseover="handleLogoHover">
+        <img :src="logoSmall" alt="" />
+      </div>
+    </transition>
   </header>
 </template>
 
 <style scoped lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-leave,
+.fade-enter-from {
+  opacity: 0;
+}
 header {
   position: fixed;
   top: 0;
@@ -152,15 +184,49 @@ header {
       height: 100%;
       top: 0;
       left: 0;
-      background-color: var(--color-base);
+      background-color: var(--color-emeraude);
       &__link {
-        color: wheat;
+        color: var(--color-cream);
         list-style: none;
       }
-      &__icon-close {
-        background-color: white;
-        z-index: 999;
-      }
+    }
+  }
+  .mobile-nav-enter-active,
+  .mobile-nav-leave-active {
+    transition: 1s ease all;
+  }
+
+  .mobile-nav-enter-from,
+  .mobile-nav-leave-to {
+    transform: translateX(-100%);
+  }
+
+  .mobile-nav-enter-to {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-icon {
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5rem;
+    &__logo {
+      background-color: rgba(245, 245, 245, 0.9);
+      border-radius: 220px;
+      padding: 1rem 2rem;
+      position: fixed;
+      left: 50%;
+      top: 2rem;
+      transform: translateX(-50%);
+    }
+
+    &__toggle-close {
+      position: fixed;
+      top: 2rem;
+
+      left: 100%;
+      transform: translateX(-100%);
     }
   }
 
