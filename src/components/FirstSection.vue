@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import product1Rec from '@/assets/img/first-section/product1-rec.svg'
 import hover1 from '@/assets/img/first-section/hover1.svg'
 import product2Rec from '@/assets/img/first-section/product2-rec.svg'

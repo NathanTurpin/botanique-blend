@@ -61,7 +61,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header class="container">
+  <div class="header-nav">
     <transition name="fade">
       <nav class="nav" v-if="!scrolledNav && !show">
         <div class="nav__branding">
@@ -104,7 +104,7 @@ onUnmounted(() => {
         <img :src="logoSmall" alt="" />
       </div>
     </transition>
-  </header>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -121,7 +121,7 @@ onUnmounted(() => {
 .fade-enter-from {
   opacity: 0;
 }
-header {
+.header-nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -131,7 +131,7 @@ header {
   align-items: center;
   z-index: 99;
   transition: all 0.5s ease-in-out;
-
+  height: 10%;
   .nav {
     display: flex;
     flex-direction: row;
