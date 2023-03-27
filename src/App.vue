@@ -1,5 +1,6 @@
 <script setup>
 import FirstSection from './components/FirstSection.vue'
+import SecondSection from './components/SecondSection.vue'
 import Header from './components/Header.vue'
 </script>
 
@@ -7,6 +8,7 @@ import Header from './components/Header.vue'
   <Header />
   <main>
     <FirstSection />
+    <SecondSection />
     <!-- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur asperiores delectus illum
     ratione, rerum doloribus distinctio eaque, ipsam dicta deleniti ducimus vel quo. Qui saepe
     ratione ad, itaque provident dolorum veniam beatae corporis quidem soluta recusandae sit
