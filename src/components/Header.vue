@@ -64,7 +64,7 @@ import NavBar from './NavBar.vue'
 
   &__laur-top {
     position: absolute;
-    top: 18%;
+    top: -4%;
     left: 0;
   }
   &__laur-bottom {
