@@ -198,7 +198,7 @@ header {
 
   .mobile-nav-enter-from,
   .mobile-nav-leave-to {
-    transform: translateX(-100%);
+    transform: translateX(100%);
   }
 
   .mobile-nav-enter-to {

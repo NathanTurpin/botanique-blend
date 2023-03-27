@@ -2,9 +2,9 @@
   --color-cream:#F5EFED;
   --color-emeraude:#3B7054;
   --color-matcha:#BBC296;
-  --color-coffe:#31211B;
+  --color-coffee:#31211B;
   --color-base: #000000;
-  --color-white-: #ffffff;
+  --color-white: #ffffff;
   --break-point: 1026px;
 }
 
@@ -88,4 +88,14 @@ caption {
   line-height: 15px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+p {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 33px;
+  text-align: center;
+  letter-spacing: 0.05em;
 }
