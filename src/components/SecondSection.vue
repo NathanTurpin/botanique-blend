@@ -8,12 +8,18 @@ const images = [
   {
     id: 0,
     src: planteImg,
-    alt: 'Image 1'
+    alt: 'Image 1',
+    title: 'Cold Brew Latte',
+    text: 'Laissez-vous envoûter par notre Cold Brew Latte, un mariage subtil entre la fraîcheur glacée et la douceur onctueuse, pour une expérience de dégustation inoubliable',
+    btns: ['voir la carte']
   },
   {
     id: 1,
     src: coffeeImg,
-    alt: 'Image 2'
+    alt: 'Image 2',
+    title: 'Oiseau du Paradis',
+    text: "l'Oiseau du Paradis, un véritable chef-d'œuvre de la nature, qui vous invite à explorer un monde de couleurs vives et de formes majestueuses",
+    btns: ['découvrir', "télécharger le guide d'entretien"]
   }
 ]
 
@@ -31,12 +37,35 @@ const swapImages = () => {
     <div class="left-section">
       <div class="content">
         <span class="content__span label label--small">notre duo du mois</span>
+
         <div class="content__buttons">
           <button @click="swapImages" class="swap-button">Swap</button>
+
           <button @click="swapImages" class="swap-button">Swap</button>
+        </div>
+
+        <div
+          class="content__infos"
+          v-for="(image, index) in orderedImages"
+          :key="index"
+          :style="{
+            zIndex: imageOrder[index] === 0 ? 2 : 1,
+            opacity: imageOrder[index] === 0 ? 1 : 0
+          }"
+        >
+          <div class="infos">
+            <h2>{{ image.title }}</h2>
+
+            <p class="body body--large">{{ image.text }}</p>
+
+            <div class="content__infos-btns" v-for="(btn, index) in image.btns" :key="index">
+              <button>{{ btn }}</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="right-section">
       <div class="image-container">
         <div
@@ -71,15 +100,27 @@ const swapImages = () => {
   position: relative;
   overflow: hidden;
 }
-
+.body {
+  text-align: left;
+}
 .content {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   height: 100%;
-}
 
+  &__infos {
+    position: relative;
+    transition: opacity 0.5s ease;
+    width: 100%;
+  }
+}
+.infos {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 .image-container {
   position: absolute;
   right: -4rem;
