@@ -104,3 +104,38 @@ p {
   text-align: center;
   letter-spacing: 0.05em;
 }
+
+.buttons {
+  width: fit-content;
+  padding: 0.8rem 1rem ;  
+  color: var(--color-white);
+  cursor: pointer;
+
+    &__emeraude {
+      background-color: var(--color-emeraude);
+      border: 1px solid var(--color-emeraude);
+      
+      &--outlined {
+      border: 1px solid var(--color-emeraude);
+
+        background-color: transparent;
+        color: var(--color-emeraude);
+      }
+    }
+
+    &__coffee {
+      background-color: var(--color-coffee);
+      border: 1px solid var(--color-coffee);
+
+      &--outlined {
+        background-color: transparent;
+        color: var(--color-coffee);
+      }
+    }
+
+    &__matcha {
+      background-color: var(--color-matcha);
+      border: 1px solid var(--color-matcha);
+      color: var(--color-coffee)
+    }
+}

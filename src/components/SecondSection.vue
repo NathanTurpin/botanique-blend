@@ -2,9 +2,11 @@
 import planteImg from '@/assets/img/second-section/plante.svg'
 import coffeeImg from '@/assets/img/second-section/coffee.svg'
 import feuilleImg from '@/assets/img/second-section/feuille.svg'
+import arrowLeft from '@/assets/img/second-section/arrow-left.svg'
+import arrowRight from '@/assets/img/second-section/arrow-right.svg'
 
 import { ref } from 'vue'
-
+const isButtonDisabled = ref([false, false])
 const images = [
   {
     id: 0,
@@ -12,7 +14,7 @@ const images = [
     alt: 'Image 1',
     title: 'Cold Brew Latte',
     text: 'Laissez-vous envoûter par notre Cold Brew Latte, un mariage subtil entre la fraîcheur glacée et la douceur onctueuse, pour une expérience de dégustation inoubliable',
-    btns: ['voir la carte']
+    btns: [{ text: 'voir la carte', class: false }]
   },
   {
     id: 1,
@@ -20,7 +22,10 @@ const images = [
     alt: 'Image 2',
     title: 'Oiseau du Paradis',
     text: "l'Oiseau du Paradis, un véritable chef-d'œuvre de la nature, qui vous invite à explorer un monde de couleurs vives et de formes majestueuses",
-    btns: ['découvrir', "télécharger le guide d'entretien"]
+    btns: [
+      { text: 'découvrir', class: false },
+      { text: "télécharger le guide d'entretien", class: true }
+    ]
   }
 ]
 
@@ -28,8 +33,10 @@ const imageOrder = ref([0, 1])
 
 const orderedImages = imageOrder.value.map((order) => images[order])
 
-const swapImages = () => {
+const swapImages = (index) => {
   imageOrder.value = [imageOrder.value[1], imageOrder.value[0]]
+  isButtonDisabled.value[index] = true
+  isButtonDisabled.value[1 - index] = false
 }
 </script> 
 
@@ -41,9 +48,21 @@ const swapImages = () => {
         <span class="content__span label label--small">notre duo du mois</span>
 
         <div class="content__buttons">
-          <button @click="swapImages" class="content__buttons--left">Swap</button>
+          <button
+            @click="swapImages(0)"
+            class="content__buttons--left"
+            :disabled="isButtonDisabled[0]"
+          >
+            <img :src="arrowLeft" alt="" />
+          </button>
 
-          <button @click="swapImages" class="content__buttons--right">Swap</button>
+          <button
+            @click="swapImages(1)"
+            class="content__buttons--right"
+            :disabled="isButtonDisabled[1]"
+          >
+            <img :src="arrowRight" alt="" />
+          </button>
         </div>
 
         <div
@@ -60,8 +79,15 @@ const swapImages = () => {
 
             <p class="body body--large">{{ image.text }}</p>
 
-            <div class="content__infos-btns" v-for="(btn, index) in image.btns" :key="index">
-              <button>{{ btn }}</button>
+            <div class="content__infos-btns">
+              <button
+                v-for="(btn, index) in image.btns"
+                :key="index"
+                class="buttons label label--small"
+                :class="btn.class ? 'buttons__emeraude--outlined' : 'buttons__emeraude'"
+              >
+                {{ btn.text }}
+              </button>
             </div>
           </div>
         </div>
@@ -96,28 +122,29 @@ const swapImages = () => {
 
 .left-section {
   flex: 1;
-  position: relative;
-
-  &__feuille {
-    width: 60%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -99;
-  }
+  display: flex;
+  flex-direction: column;
   .body {
     text-align: left;
+  }
+  &__feuille {
+    width: 60%;
+    margin-bottom: -30%;
+    z-index: -99;
   }
   .content {
     display: flex;
     flex-direction: column;
     align-items: start;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 1rem;
-    height: 52%;
+    height: 100%;
     width: 90%;
     margin: auto;
 
+    &__span {
+      color: var(--color-emeraude);
+    }
     &__infos {
       transition: opacity 0.5s ease;
       width: 100%;
@@ -133,12 +160,22 @@ const swapImages = () => {
       gap: 1rem;
     }
 
+    &__infos-btns {
+      display: flex;
+      gap: 0.5rem;
+    }
     &__buttons {
-      background-color: #f2f2f2;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem;
-      border-radius: 4px;
+      display: flex;
+      gap: 1rem;
+      &--left,
+      &--right {
+        background: none;
+        border: none;
+        cursor: pointer;
+        &:disabled {
+          opacity: 0.5;
+        }
+      }
     }
   }
 }
