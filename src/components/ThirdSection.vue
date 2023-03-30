@@ -75,12 +75,12 @@ const tabs = ref([
     &__top {
       display: flex;
       justify-content: space-between;
-      width: 80%;
+      width: 90%;
       margin: 3rem auto;
     }
 
     &__bot {
-      width: 80%;
+      width: 90%;
       margin: 3rem auto;
       display: flex;
       flex-direction: column;
