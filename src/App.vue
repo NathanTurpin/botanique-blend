@@ -3,6 +3,7 @@ import Header from './components/Header.vue'
 import FirstSection from './components/FirstSection.vue'
 import SecondSection from './components/SecondSection.vue'
 import ThirdSection from './components/ThirdSection.vue'
+import LastSection from './components/LastSection.vue'
 </script>
 
 <template>
@@ -13,6 +14,8 @@ import ThirdSection from './components/ThirdSection.vue'
     <SecondSection />
 
     <ThirdSection />
+
+    <LastSection />
   </main>
   <footer></footer>
 </template>
