@@ -37,8 +37,8 @@ h2 {
   font-family: 'Erotique Alternate Trial';
   font-style: normal;
   font-weight: 700;
-  font-size: 32px;
-  line-height: 32px;
+  font-size: 4vw;
+  line-height: 4vw;
   letter-spacing: 0.04em;
 }
 
@@ -107,7 +107,7 @@ p {
 
 .buttons {
   width: fit-content;
-  padding: 0.8rem 1rem ;  
+  padding: 0.8em 1em ;  
   color: var(--color-white);
   cursor: pointer;
 
