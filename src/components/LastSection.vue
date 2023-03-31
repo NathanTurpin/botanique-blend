@@ -27,17 +27,19 @@ const comments = ref([
 </script>
 <template>
   <section class="last-section">
-    <h2 class="last-section__header">Vos derniers mots doux</h2>
-    <div class="last-section__container">
-      <img :src="Epi1" alt="" class="last-section__epi1" />
-      <img :src="Epi2" alt="" class="last-section__epi2" />
-      <img :src="Epi3" alt="" class="last-section__epi3" />
-      <img :src="Epi4" alt="" class="last-section__epi4" />
+    <div class="last-section__contain">
+      <h2 class="last-section__header">Vos derniers mots doux</h2>
+      <div class="last-section__container">
+        <img :src="Epi1" alt="" class="last-section__epi1" />
+        <img :src="Epi2" alt="" class="last-section__epi2" />
+        <img :src="Epi3" alt="" class="last-section__epi3" />
+        <img :src="Epi4" alt="" class="last-section__epi4" />
 
-      <div class="last-section__block" v-for="comment in comments" :key="comment.id">
-        <h2 class="last-section__title label label--small">{{ comment.hour }}</h2>
-        <h3 class="last-section__subtitle label label--small">{{ comment.name }}</h3>
-        <p class="last-section__description body body--large">{{ comment.desc }}</p>
+        <div class="last-section__block" v-for="comment in comments" :key="comment.id">
+          <h2 class="last-section__title label label--small">{{ comment.hour }}</h2>
+          <h3 class="last-section__subtitle label label--small">{{ comment.name }}</h3>
+          <p class="last-section__description body body--large">{{ comment.desc }}</p>
+        </div>
       </div>
     </div>
   </section>
@@ -46,10 +48,11 @@ const comments = ref([
 
 <style lang="scss" scoped>
 .last-section {
-  height: 50vh;
-  width: 90%;
-  margin: 3rem auto;
-
+  &__contain {
+    width: 90%;
+    margin: 3rem auto;
+    padding: 1rem;
+  }
   &__header {
     text-align: left;
     margin-bottom: 3rem;
@@ -91,8 +94,8 @@ const comments = ref([
     flex-direction: column;
     align-items: center;
     text-align: center;
+    flex-wrap: wrap;
     flex: 1;
-    min-width: calc(33% - 1rem);
     box-sizing: border-box;
     border: 1px solid var(--color-matcha);
     padding: 1rem;
@@ -107,16 +110,16 @@ const comments = ref([
     color: var(--color-coffee);
     width: 70%;
   }
-  @media (max-width: 768px) {
-    &__block {
-      min-width: calc(50% - 1rem);
-    }
-  }
+  // @media (max-width: 768px) {
+  //   &__block {
+  //     min-width: calc(50% - 1rem);
+  //   }
+  // }
 
-  @media (max-width: 480px) {
-    &__block {
-      min-width: 100%;
-    }
-  }
+  // @media (max-width: 480px) {
+  //   &__block {
+  //     min-width: 100%;
+  //   }
+  // }
 }
 </style>
