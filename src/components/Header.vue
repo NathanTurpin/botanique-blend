@@ -35,9 +35,9 @@ watchEffect(() => {
         </h1>
 
         <div class="hero-banner__actions">
-          <button>Découvrir les plantes</button>
+          <button class="buttons buttons__emeraude">Découvrir les plantes</button>
 
-          <button>Voir la carte</button>
+          <button class="buttons buttons__coffee--outlined">Voir la carte</button>
         </div>
       </div>
 
@@ -51,7 +51,9 @@ watchEffect(() => {
     </div>
 
     <div class="hero-mobile" v-else>
-      <img :src="ImgLeftGrande" alt="" class="hero-mobile__image" />
+      <div class="hero-mobile__image-container">
+        <!-- <img :src="ImgLeftGrande" alt="" class="hero-mobile__image" /> -->
+      </div>
 
       <div class="hero-mobile__content">
         <h2 class="hero-mobile__title">
@@ -118,23 +120,7 @@ watchEffect(() => {
     flex-direction: row;
     gap: 0.2rem;
     width: 70%;
-
-    button {
-      padding: 12px 16px 12px 16px;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 20px;
-      color: var(--color-coffee);
-      border: 1px solid var(--color-coffee);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      &:first-child {
-        border: 1px solid var(--color-emeraude);
-        background-color: var(--color-emeraude);
-        color: var(--color-cream);
-      }
-    }
+    z-index: 99;
   }
 
   &__right {
@@ -190,7 +176,14 @@ watchEffect(() => {
   justify-content: center;
   align-items: center;
   height: 100%;
-
+  &__image-container {
+    background-image: url('@/assets/img/header/img-left-grande.svg');
+    height: 100%;
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
   &__content {
     display: flex;
     flex-direction: column;
@@ -199,7 +192,7 @@ watchEffect(() => {
     gap: 1rem; /* Ajustez l'espace entre les éléments ici */
     text-align: center;
     width: 55vw;
-    margin: 2rem auto;
+    margin: auto;
   }
   &__title {
     color: var(--color-emeraude);
@@ -209,7 +202,6 @@ watchEffect(() => {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    margin-bottom: 6vh;
     justify-content: center;
   }
 }
