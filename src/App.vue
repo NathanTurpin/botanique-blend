@@ -18,7 +18,9 @@ import Footer from './components/Footer.vue'
 
     <LastSection />
   </main>
-  <Footer />
+  <footer>
+    <Footer />
+  </footer>
 </template>
 
 <style>
