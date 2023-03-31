@@ -9,6 +9,20 @@ import hover3 from '@/assets/img/first-section/hover3.svg'
 import packaging1 from '@/assets/img/first-section/packaging1.svg'
 import packaging2 from '@/assets/img/first-section/packaging2.svg'
 import packaging3 from '@/assets/img/first-section/packaging3.svg'
+
+import useWindowSize from '../assets/composables/useWindowSize'
+import { ref, watchEffect } from 'vue'
+
+const { width } = useWindowSize()
+const isMobile = ref(null)
+
+watchEffect(() => {
+  if (width.value <= 1026) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+})
 const products = [
   {
     id: 0,
@@ -59,11 +73,21 @@ const hideHover = (index) => {
     clearInterval(timer)
   }, 300)
 }
+
+const activeIndex = ref(0)
+
+const next = () => {
+  activeIndex.value = (activeIndex.value + 1) % products.length
+}
+
+const prev = () => {
+  activeIndex.value = (activeIndex.value - 1 + products.length) % products.length
+}
 </script>
 
 
 <template>
-  <section class="contianer first-section">
+  <section class="first-section" v-if="!isMobile">
     <div class="first-section__top">
       <div class="label label--medium">Nouveau</div>
 
@@ -112,6 +136,29 @@ const hideHover = (index) => {
           </button>
         </div>
       </div>
+    </div>
+  </section>
+  <section class="mobile" v-else>
+    <div class="mobile__header">
+      <span class="label label--medium">Nouveau</span>
+
+      <h3>Nos cafés en grains disponible en pré-commande</h3>
+    </div>
+
+    <div class="slider">
+      <div class="slider__content">
+        <div
+          v-for="product in products"
+          :key="product.id"
+          :class="{ slider__item: true, active: activeIndex === product.id }"
+        >
+          <img :src="product.img" :alt="product.title" class="slider__image" />
+          <h2>{{ product.title }}</h2>
+          <p>{{ product.text }}</p>
+        </div>
+      </div>
+      <button @click="prev">Précédent</button>
+      <button @click="next">Suivant</button>
     </div>
   </section>
 </template>
@@ -235,5 +282,53 @@ const hideHover = (index) => {
       background-color: var(--color-coffee);
     }
   }
+}
+
+.mobile {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    h3 {
+      text-align: center;
+    }
+  }
+}
+
+.slider {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slider__content {
+  width: 100%;
+  height: 100%;
+}
+
+.slider__item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.slider__item.active {
+  opacity: 1;
 }
 </style>
