@@ -191,8 +191,7 @@ watchEffect(() => {
     align-items: center;
     gap: 1rem; /* Ajustez l'espace entre les éléments ici */
     text-align: center;
-    width: 55vw;
-    margin: auto;
+    margin: 1rem;
   }
   &__title {
     color: var(--color-emeraude);
