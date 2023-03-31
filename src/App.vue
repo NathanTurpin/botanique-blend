@@ -1,15 +1,28 @@
 <script setup>
-import NavBar from './components/NavBar.vue'
+import Header from './components/Header.vue'
+import FirstSection from './components/FirstSection.vue'
+import SecondSection from './components/SecondSection.vue'
+import ThirdSection from './components/ThirdSection.vue'
+import LastSection from './components/LastSection.vue'
+import Footer from './components/Footer.vue'
 </script>
 
 <template>
-  <NavBar />
-  <header></header>
+  <Header />
   <main>
-    <section></section>
+    <FirstSection />
+
+    <SecondSection />
+
+    <ThirdSection />
+
+    <LastSection />
   </main>
-  <footer></footer>
+  <footer>
+    <Footer />
+  </footer>
 </template>
 
-<style scoped lang="scss">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro@1&display=swap');
 </style>
