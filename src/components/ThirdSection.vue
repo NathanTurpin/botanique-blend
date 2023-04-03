@@ -2,7 +2,6 @@
 import { ref, watchEffect } from 'vue'
 import useWindowSize from '../assets/composables/useWindowSize'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-const currentIndex = ref(0)
 
 const { width } = useWindowSize()
 const isMobile = ref(null)
@@ -15,9 +14,6 @@ watchEffect(() => {
   }
 })
 
-const updateCurrentIndex = (swipper) => {
-  currentIndex.value = swipper.activeIndex
-}
 const tabs = ref([
   {
     id: 0,
@@ -76,7 +72,7 @@ const tabs = ref([
     <div class="mobile__header">
       <span class="mobile__title">Ateliers et évènements à venir</span>
     </div>
-    <swiper :slides-per-view="1" :space-between="10" @slideChange="updateCurrentIndex">
+    <swiper :slides-per-view="1" :space-between="10" class="mobile__blocks">
       <swiper-slide class="mobile__slider" v-for="tab in tabs" :key="tab.id">
         <div class="mobile__content">
           <div class="mobile__time">
@@ -202,6 +198,9 @@ const tabs = ref([
     font-weight: 700;
     font-size: 22px;
     line-height: 22px;
+  }
+  &__blocks {
+    padding: 1rem;
   }
   &__content {
     display: flex;
