@@ -9,9 +9,9 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 
 import { ref, watchEffect } from 'vue'
 
+const currentIndex = ref(0)
 const { width } = useWindowSize()
 const isMobile = ref(null)
-const currentIndex = ref(0)
 
 watchEffect(() => {
   if (width.value <= 1026) {
@@ -129,28 +129,6 @@ const updateCurrentIndex = (swipper) => {
     </div>
   </section>
 
-  <!-- <section class="mobile" v-else>
-    <div class="mobile__images-container">
-      <img :src="planteImg" alt="" />
-      <img :src="coffeeImg" alt="" />
-    </div>
-    <div class="mobile__content" v-for="image in images" :key="image.id">
-      <h2>{{ image.title }}</h2>
-
-      <p class="body body--large">{{ image.text }}</p>
-
-      <div class="mobile__infos-btns">
-        <button
-          v-for="(btn, index) in image.btns"
-          :key="index"
-          class="buttons label label--small"
-          :class="btn.class ? 'buttons__emeraude--outlined' : 'buttons__emeraude'"
-        >
-          {{ btn.text }}
-        </button>
-      </div>
-    </div>
-  </section> -->
   <section class="mobile" v-else>
     <swiper :slides-per-view="1" :space-between="10" @slideChange="updateCurrentIndex">
       <swiper-slide v-for="image in images" :key="image.id">
