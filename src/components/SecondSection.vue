@@ -4,8 +4,22 @@ import coffeeImg from '@/assets/img/second-section/coffee.svg'
 import feuilleImg from '@/assets/img/second-section/feuille.svg'
 import arrowLeft from '@/assets/img/second-section/arrow-left.svg'
 import arrowRight from '@/assets/img/second-section/arrow-right.svg'
+import useWindowSize from '../assets/composables/useWindowSize'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
+
+const { width } = useWindowSize()
+const isMobile = ref(null)
+const currentIndex = ref(0)
+
+watchEffect(() => {
+  if (width.value <= 1026) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+})
 const isButtonDisabled = ref([false, false])
 const images = [
   {
@@ -38,10 +52,14 @@ const swapImages = (index) => {
   isButtonDisabled.value[index] = true
   isButtonDisabled.value[1 - index] = false
 }
+
+const updateCurrentIndex = (swipper) => {
+  currentIndex.value = swipper.activeIndex
+}
 </script> 
 
 <template>
-  <section class="second-section">
+  <section class="second-section" v-if="!isMobile">
     <div class="left-section">
       <img :src="feuilleImg" alt="" class="left-section__feuille" />
       <div class="content">
@@ -110,6 +128,54 @@ const swapImages = (index) => {
       </div>
     </div>
   </section>
+
+  <!-- <section class="mobile" v-else>
+    <div class="mobile__images-container">
+      <img :src="planteImg" alt="" />
+      <img :src="coffeeImg" alt="" />
+    </div>
+    <div class="mobile__content" v-for="image in images" :key="image.id">
+      <h2>{{ image.title }}</h2>
+
+      <p class="body body--large">{{ image.text }}</p>
+
+      <div class="mobile__infos-btns">
+        <button
+          v-for="(btn, index) in image.btns"
+          :key="index"
+          class="buttons label label--small"
+          :class="btn.class ? 'buttons__emeraude--outlined' : 'buttons__emeraude'"
+        >
+          {{ btn.text }}
+        </button>
+      </div>
+    </div>
+  </section> -->
+  <section class="mobile" v-else>
+    <swiper :slides-per-view="1" :space-between="10" @slideChange="updateCurrentIndex">
+      <swiper-slide v-for="image in images" :key="image.id">
+        <div class="mobile__images-container">
+          <img :src="image.src" alt="" />
+        </div>
+        <div class="mobile__content">
+          <span class="mobile__span label label--small">notre duo du mois</span>
+
+          <h2>{{ image.title }}</h2>
+          <p class="body body--large">{{ image.text }}</p>
+          <div class="mobile__infos-btns">
+            <button
+              v-for="(btn, index) in image.btns"
+              :key="index"
+              class="buttons label label--small"
+              :class="btn.class ? 'buttons__emeraude--outlined' : 'buttons__emeraude'"
+            >
+              {{ btn.text }}
+            </button>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper>
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -118,90 +184,125 @@ const swapImages = (index) => {
   flex-direction: row;
   align-items: stretch;
   height: 100vh;
-}
-
-.left-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  .body {
-    text-align: left;
-  }
-  &__feuille {
-    width: 60%;
-    margin-bottom: -30%;
-    z-index: -99;
-  }
-  .content {
+  .left-section {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    gap: 1rem;
-    height: 100%;
-    width: 90%;
-    margin: auto;
-
-    &__span {
-      color: var(--color-emeraude);
+    .body {
+      text-align: left;
     }
-    &__infos {
-      transition: opacity 0.5s ease;
-      width: 100%;
-      position: relative;
+    &__feuille {
+      width: 60%;
+      margin-bottom: -30%;
+      z-index: -99;
     }
-
-    &__info {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .content {
       display: flex;
       flex-direction: column;
+      align-items: start;
+      justify-content: center;
       gap: 1rem;
-    }
+      height: 100%;
+      width: 90%;
+      margin: auto;
 
-    &__infos-btns {
-      display: flex;
-      gap: 0.5rem;
-    }
-    &__buttons {
-      display: flex;
-      gap: 1rem;
-      &--left,
-      &--right {
-        background: none;
-        border: none;
-        cursor: pointer;
-        &:disabled {
-          opacity: 0.5;
+      &__span {
+        color: var(--color-emeraude);
+      }
+      &__infos {
+        transition: opacity 0.5s ease;
+        width: 100%;
+        position: relative;
+      }
+
+      &__info {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      &__infos-btns {
+        display: flex;
+        gap: 0.5rem;
+      }
+      &__buttons {
+        display: flex;
+        gap: 1rem;
+        &--left,
+        &--right {
+          background: none;
+          border: none;
+          cursor: pointer;
+          &:disabled {
+            opacity: 0.5;
+          }
         }
+      }
+    }
+  }
+
+  .right-section {
+    flex: 1;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .image-wrapper {
+      position: absolute;
+      bottom: -7rem;
+      right: 10rem;
+      width: 64%;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      &:last-child {
+        bottom: -6rem;
+        width: 59%;
+      }
+      img {
+        width: 100%;
+        height: auto;
       }
     }
   }
 }
 
-.right-section {
-  flex: 1;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  position: relative;
+.mobile {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  .image-wrapper {
-    position: absolute;
-    bottom: -7rem;
-    right: 10rem;
-    width: 64%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    &:last-child {
-      bottom: -6rem;
-      width: 59%;
-    }
+  &__images-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     img {
-      width: 100%;
-      height: auto;
+      width: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 90%;
+    margin: 1rem auto;
+  }
+  &__span {
+    color: var(--color-emeraude);
+  }
+  &__infos-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 }
 </style>
