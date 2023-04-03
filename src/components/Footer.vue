@@ -1,6 +1,19 @@
     <script setup>
 import FeuilleLeft from '@/assets/img/footer/left.svg'
 import FeuilleRight from '@/assets/img/footer/feuille-right.svg'
+import useWindowSize from '../assets/composables/useWindowSize'
+import { ref, watchEffect } from 'vue'
+
+const { width } = useWindowSize()
+const isMobile = ref(null)
+
+watchEffect(() => {
+  if (width.value <= 1026) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+})
 </script>
 <template>
   <footer class="footer">
@@ -76,7 +89,7 @@ import FeuilleRight from '@/assets/img/footer/feuille-right.svg'
 
   &__title {
     font-weight: 700;
-    font-size: 1.5vw; // Utilisez l'unité vw pour définir une taille de police responsive
+    font-size: 1.5vw;
     color: var(--color-emeraude);
     margin-bottom: 9%;
   }
@@ -85,7 +98,7 @@ import FeuilleRight from '@/assets/img/footer/feuille-right.svg'
   &__tel,
   &__mail {
     font-size: 1.5vw;
-    margin-bottom: -2vh; // Utilisez l'unité vw pour définir une taille de police responsive
+    margin-bottom: -2vh;
   }
 
   &__mail {
@@ -96,9 +109,8 @@ import FeuilleRight from '@/assets/img/footer/feuille-right.svg'
     display: flex;
     width: 37%;
     justify-content: space-between;
-    // Utilisez l'unité vw pour créer un espacement responsive entre les éléments
     .caption {
-      font-size: 1vw; // Utilisez l'unité vw pour définir une taille de police responsive
+      font-size: 1vw;
     }
   }
 }

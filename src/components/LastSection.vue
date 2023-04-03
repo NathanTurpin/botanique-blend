@@ -1,9 +1,22 @@
   <script setup>
-import { ref } from 'vue'
 import Epi1 from '@/assets/img/last-section/epi1.svg'
 import Epi2 from '@/assets/img/last-section/epi2.svg'
 import Epi3 from '@/assets/img/last-section/epi3.svg'
 import Epi4 from '@/assets/img/last-section/epi4.svg'
+import { ref, watchEffect } from 'vue'
+import useWindowSize from '../assets/composables/useWindowSize'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+
+const { width } = useWindowSize()
+const isMobile = ref(null)
+
+watchEffect(() => {
+  if (width.value <= 1026) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+})
 const comments = ref([
   {
     id: 0,
@@ -28,8 +41,10 @@ const comments = ref([
 <template>
   <section class="last-section">
     <div class="last-section__contain">
-      <h2 class="last-section__header">Vos derniers mots doux</h2>
-      <div class="last-section__container">
+      <h2 class="last-section__header" :class="isMobile ? 'mobile__header' : ''">
+        Vos derniers mots doux
+      </h2>
+      <div class="last-section__container" v-if="!isMobile">
         <img :src="Epi1" alt="" class="last-section__epi1" />
         <img :src="Epi2" alt="" class="last-section__epi2" />
         <img :src="Epi3" alt="" class="last-section__epi3" />
@@ -40,6 +55,18 @@ const comments = ref([
           <h3 class="last-section__subtitle label label--small">{{ comment.name }}</h3>
           <p class="last-section__description body body--large">{{ comment.desc }}</p>
         </div>
+      </div>
+
+      <div class="mobile" v-else>
+        <swiper :slides-per-view="1" :space-between="10" class="mobile__blocks">
+          <swiper-slide v-for="comment in comments" :key="comment.id">
+            <div class="mobile__block">
+              <h2 class="last-section__title label label--small">{{ comment.hour }}</h2>
+              <h3 class="last-section__subtitle label label--small">{{ comment.name }}</h3>
+              <p class="last-section__description body body--large">{{ comment.desc }}</p>
+            </div>
+          </swiper-slide>
+        </swiper>
       </div>
     </div>
   </section>
@@ -109,17 +136,30 @@ const comments = ref([
   &__description {
     color: var(--color-coffee);
     width: 70%;
+    margin: auto;
   }
-  // @media (max-width: 768px) {
-  //   &__block {
-  //     min-width: calc(50% - 1rem);
-  //   }
-  // }
+}
 
-  // @media (max-width: 480px) {
-  //   &__block {
-  //     min-width: 100%;
-  //   }
-  // }
+.mobile {
+  height: 40vh;
+
+  &__header {
+    text-align: center;
+  }
+
+  &__blocks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    flex: 1;
+  }
+
+  &__block {
+    padding: 1rem;
+    border: 1px solid var(--color-matcha);
+  }
 }
 </style>
