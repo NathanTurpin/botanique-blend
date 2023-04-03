@@ -296,7 +296,7 @@ const prev = () => {
   }
 }
 .mobile {
-  height: 100vh;
+  height: 110vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -328,7 +328,7 @@ const prev = () => {
     display: flex;
     justify-content: space-evenly;
     width: 50%;
-    margin: auto;
+    margin: 0 auto;
     z-index: 999;
   }
   &__item {

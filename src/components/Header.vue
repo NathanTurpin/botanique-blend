@@ -35,9 +35,13 @@ watchEffect(() => {
         </h1>
 
         <div class="hero-banner__actions">
-          <button class="buttons buttons__emeraude">Découvrir les plantes</button>
+          <button class="buttons buttons__emeraude label label--small">
+            Découvrir les plantes
+          </button>
 
-          <button class="buttons buttons__coffee--outlined">Voir la carte</button>
+          <button class="buttons buttons__coffee--outlined label label--small">
+            Voir la carte
+          </button>
         </div>
       </div>
 
@@ -51,9 +55,7 @@ watchEffect(() => {
     </div>
 
     <div class="hero-mobile" v-else>
-      <div class="hero-mobile__image-container">
-        <!-- <img :src="ImgLeftGrande" alt="" class="hero-mobile__image" /> -->
-      </div>
+      <div class="hero-mobile__image-container"></div>
 
       <div class="hero-mobile__content">
         <h2 class="hero-mobile__title">
@@ -62,9 +64,11 @@ watchEffect(() => {
         </h2>
 
         <div class="hero-mobile__actions">
-          <button class="buttons buttons__coffee--outlined">Découvrir les plantes</button>
+          <button class="buttons buttons__coffee--outlined label label--small">
+            Découvrir les plantes
+          </button>
 
-          <button class="buttons buttons__emeraude">Voir la carte</button>
+          <button class="buttons buttons__emeraude label label--small">Voir la carte</button>
         </div>
       </div>
     </div>
