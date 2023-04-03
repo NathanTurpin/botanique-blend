@@ -9,6 +9,21 @@ import hover3 from '@/assets/img/first-section/hover3.svg'
 import packaging1 from '@/assets/img/first-section/packaging1.svg'
 import packaging2 from '@/assets/img/first-section/packaging2.svg'
 import packaging3 from '@/assets/img/first-section/packaging3.svg'
+import ArrowLeft from '@/assets/img/second-section/arrow-left.svg'
+import ArrowRight from '@/assets/img/second-section/arrow-right.svg'
+import useWindowSize from '../assets/composables/useWindowSize'
+import { ref, watchEffect } from 'vue'
+
+const { width } = useWindowSize()
+const isMobile = ref(null)
+
+watchEffect(() => {
+  if (width.value <= 1026) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+})
 const products = [
   {
     id: 0,
@@ -59,11 +74,22 @@ const hideHover = (index) => {
     clearInterval(timer)
   }, 300)
 }
+
+const activeIndex = ref(0)
+
+const next = () => {
+  console.log('cc')
+  activeIndex.value = (activeIndex.value + 1) % products.length
+}
+
+const prev = () => {
+  activeIndex.value = (activeIndex.value - 1 + products.length) % products.length
+}
 </script>
 
 
 <template>
-  <section class="contianer first-section">
+  <section class="first-section" v-if="!isMobile">
     <div class="first-section__top">
       <div class="label label--medium">Nouveau</div>
 
@@ -110,6 +136,39 @@ const hideHover = (index) => {
           >
             pré-commander
           </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mobile" v-else>
+    <div class="mobile__header">
+      <span class="label label--medium">Nouveau</span>
+
+      <h3>Nos cafés en grains disponible en pré-commande</h3>
+    </div>
+
+    <div class="slider">
+      <div class="slider__content">
+        <div
+          v-for="product in products"
+          :key="product.id"
+          :class="{ slider__item: true, active: activeIndex === product.id }"
+        >
+          <img :src="product.img" :alt="product.title" class="slider__image" />
+          <h4>{{ product.title }}</h4>
+          <div class="rectangle" :class="'rectangle--' + product.class">
+            <button
+              class="first-section__buttons label label--small"
+              :class="'first-section__buttons--' + product.class"
+            >
+              pré-commander
+            </button>
+          </div>
+          <div class="slider__actions">
+            <img :src="ArrowLeft" @click="prev" alt="" />
+            <img :src="ArrowRight" alt="" @click="next" />
+          </div>
         </div>
       </div>
     </div>
@@ -199,22 +258,6 @@ const hideHover = (index) => {
   &__title {
     margin-top: 2rem;
   }
-  .rectangle {
-    padding: 0.5rem;
-    display: inline-block;
-
-    &--emeraude {
-      border: 0.1rem solid var(--color-emeraude);
-    }
-
-    &--coffee {
-      border: 0.1rem solid var(--color-coffee);
-    }
-
-    &--matcha {
-      border: 0.1rem solid var(--color-matcha);
-    }
-  }
 
   &__buttons {
     width: 100%;
@@ -235,5 +278,81 @@ const hideHover = (index) => {
       background-color: var(--color-coffee);
     }
   }
+}
+.rectangle {
+  padding: 0.5rem;
+  display: inline-block;
+
+  &--emeraude {
+    border: 0.1rem solid var(--color-emeraude);
+  }
+
+  &--coffee {
+    border: 0.1rem solid var(--color-coffee);
+  }
+
+  &--matcha {
+    border: 0.1rem solid var(--color-matcha);
+  }
+}
+.mobile {
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.4rem;
+    height: 15%;
+    h3 {
+      text-align: center;
+    }
+  }
+}
+
+.slider {
+  position: relative;
+  width: 100vw;
+  height: 85%;
+  &__content {
+    width: 100%;
+    height: 100%;
+  }
+  &__actions {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    margin: 0 auto;
+    z-index: 999;
+  }
+  &__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+    gap: 2rem;
+  }
+  &__image {
+    width: calc(100% - 2rem); /* Laisser un espace de 1rem (16px) de chaque côté */
+    height: auto; /* Conserver les proportions de l'image */
+    max-height: calc(100vh - 19rem); /* Laisser un espace de 2rem (32px) en haut et en bas */
+    object-fit: contain; /* Redimensionner l'image pour qu'elle s'adapte à l'espace disponible */
+  }
+}
+.active {
+  opacity: 1;
 }
 </style>
